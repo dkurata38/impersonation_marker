@@ -1,9 +1,8 @@
 package com.github.we_team2.impersonation_marker.domain;
 
-import lombok.RequiredArgsConstructor;
-import lombok.Value;
-
 import java.util.List;
+
+import lombok.RequiredArgsConstructor;
 
 /**
  * 分類した結果を表す.
@@ -14,7 +13,7 @@ import java.util.List;
 public class ClassificationResult {
     private final List<ClassificationScore> classificationScores;
 
-    public Double point() {
-        return null;
+    public Double point(double positive_prob) {
+        return positive_prob * 100;
     }
 }
