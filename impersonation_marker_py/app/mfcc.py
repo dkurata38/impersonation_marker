@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 '''
-特徴量の計算
+特徴量の算出
 '''
 from python_speech_features import mfcc
 import scipy
@@ -33,3 +33,4 @@ def create_ceps(fn):
 
 if __name__ == '__main__':
     create_ceps('./data/info-girl1_info-girl1-omedetou1.wav')
+    create_ceps('./data/info-girl1_info-girl1-omedetougozaimasu1.wav')

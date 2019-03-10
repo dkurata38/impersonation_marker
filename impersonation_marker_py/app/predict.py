@@ -2,17 +2,13 @@
 # -*- coding: utf-8 -*-
 
 '''
-特徴量の計算
+特徴量を利用して予測
 '''
-from python_speech_features import mfcc
 from matplotlib.pyplot import specgram
 from matplotlib import pylab
 from sklearn.metrics import confusion_matrix
 from sklearn.svm import LinearSVC
 from sklearn.utils import resample
-import scipy
-from scipy import io
-from scipy.io import wavfile
 import glob
 import numpy as np
 import os
@@ -62,14 +58,18 @@ def plot_confusion_matrix(cm,name_list,name,title):
     pylab.show()
 
 if __name__ == '__main__':
-    name_list = ["info-girl1_info-girl1-omedetou1"]
+    name_list = ["info-girl1_info-girl1-omedetou1", "info-girl1_info-girl1-omedetougozaimasu1"]
 
     x,y = read_ceps(name_list)
     logger.debug('x = {}'.format(x))
     logger.debug('y = {}'.format(y))
     svc = LinearSVC(C=1.0)
     x,y = resample(x,y,n_samples=len(y))
-    logger.debug(len(y))
-    svc.fit(x[0:],y[0:])
-    prediction = svc.predict(x[:150])
-    cm = confusion_matrix(y[:150],prediction)
+    svc.fit(x[1:],y[1:])
+    prediction = svc.predict(x[1:])
+    logger.debug('prediction = {}'.format(prediction))
+
+    cm = confusion_matrix(y[1:],prediction)
+
+    new_cm = normalisation(cm)
+    logger.debug('normalised cm = {}'.format(new_cm))
