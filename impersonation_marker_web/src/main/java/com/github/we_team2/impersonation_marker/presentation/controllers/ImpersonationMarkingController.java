@@ -6,17 +6,20 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.validation.Valid;
+
 @Controller
 public class ImpersonationMarkingController {
     private final ImpersonationMarkingService service;
-
 
     public ImpersonationMarkingController(ImpersonationMarkingService service) {
         this.service = service;
     }
 
     @PostMapping("mark")
-    public String mark(ImpersonationForm impersonationForm, Model model) {
-        return null;
+    public String mark(@Valid ImpersonationForm impersonationForm, Model model) {
+
+        model.addAttribute("filename", impersonationForm.getUploadedFile().getOriginalFilename());
+        return "score";
     }
 }

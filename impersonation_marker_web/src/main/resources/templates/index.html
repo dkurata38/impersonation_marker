@@ -8,10 +8,11 @@
 	<div class="row">
 		<h1>アナゴさん ものまね選手権</h1>
 		<img>
-		<form action="/send" th:action="@{/mark}" method="post" enctype="multipart/form-data" th:object="${impersonationForm}">
+		<form action="/mark" th:action="@{/mark}" method="post" enctype="multipart/form-data" th:object="${impersonationForm}">
 			<input type="file" accept="audio/*" capture="microphone"
-				id="recorder" name="upload_file">
+				id="recorder" th:field="*{uploadedFile}">
 			<audio id="player" controls></audio>
+			<input type="submit" value="採点">
 		</form>
 	</div>
 	<script>
