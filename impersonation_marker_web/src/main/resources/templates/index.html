@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{layout/template :: layout(~{::title},~{::body/content()})}">
+<head>
+<title>Welcome</title>
+</head>
+<body>
+	<div class="row">
+		<h1>アナゴさん ものまね選手権</h1>
+		<img>
+		<form action="/send" th:action="@{/mark}" method="post" enctype="multipart/form-data" th:object="${impersonationForm}">
+			<input type="file" accept="audio/*" capture="microphone"
+				id="recorder" name="upload_file">
+			<audio id="player" controls></audio>
+		</form>
+	</div>
+	<script>
+	  var recorder = document.getElementById('recorder');
+	  var player = document.getElementById('player');
+
+	  recorder.addEventListener('change', function(e) {
+	    var file = e.target.files[0];
+	    // Do something with the audio file.
+	    player.src =  URL.createObjectURL(file);
+	  });
+	</script>
+
+</body>
+</html>
