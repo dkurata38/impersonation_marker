@@ -36,8 +36,10 @@ def create_ceps(fn):
 
 
 if __name__ == '__main__':
+    # wav fileの保存先
     base_dir = '/app/data/'
     dir_name = ['anago', 'notanago']
+
     for dn in dir_name:
         for fn in glob.glob(os.path.join(base_dir, dn, "*.wav")):
             create_ceps(fn)

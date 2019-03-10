@@ -16,7 +16,9 @@ import os
 from logging import getLogger, basicConfig, DEBUG, WARNING
 
 logger = getLogger(__name__)
-BASE_DIR = 'data/'
+
+# ceps の保存場所
+BASE_DIR = '/app/data/'
 
 basicConfig(
     level = DEBUG,
