@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 '''
-声を分類してみる
+特徴量の計算
 '''
 from python_speech_features import mfcc
 from matplotlib.pyplot import specgram
@@ -26,22 +26,10 @@ basicConfig(
     format = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
 )
 
-def write_ceps(ceps,fn):
-    base_fn,ext = os.path.splitext(fn)
-    data_fn = base_fn + ".ceps"
-    np.save(data_fn,ceps)
-
-def create_ceps(fn):
-    # sample_rate,X = io.wavfile.read(fn)
-    rate, sig = io.wavfile.read(fn)
-    ceps = mfcc(sig, rate)
-
-    write_ceps(ceps, fn)
-
 def read_ceps(name_list,base_dir = BASE_DIR):
     X,y = [],[]
     for label,name in enumerate(name_list):
-        for fn in glob.glob(os.path.join(base_dir,name,"*.ceps.npy")):
+        for fn in glob.glob(os.path.join(base_dir, "*.ceps.npy")):
             ceps = np.load(fn)
             num_ceps = len(ceps)
             X.append(np.mean(ceps[:],axis=0))
@@ -74,13 +62,14 @@ def plot_confusion_matrix(cm,name_list,name,title):
     pylab.show()
 
 if __name__ == '__main__':
-    create_ceps('./data/info-girl1_info-girl1-omedetou1.wav')
+    name_list = ["info-girl1_info-girl1-omedetou1"]
 
-    name_list = ["test"]
-
-    x,y = read_ceps(name_list, base_dir='/app/data')
+    x,y = read_ceps(name_list)
+    logger.debug('x = {}'.format(x))
+    logger.debug('y = {}'.format(y))
     svc = LinearSVC(C=1.0)
     x,y = resample(x,y,n_samples=len(y))
-    svc.fit(x[150:],y[150:])
+    logger.debug(len(y))
+    svc.fit(x[0:],y[0:])
     prediction = svc.predict(x[:150])
     cm = confusion_matrix(y[:150],prediction)
