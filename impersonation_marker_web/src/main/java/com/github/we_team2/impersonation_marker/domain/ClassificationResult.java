@@ -13,7 +13,10 @@ import java.util.List;
 public class ClassificationResult {
     private final List<ClassificationScore> classificationScores;
 
-    public Double point(double positive_prob) {
-        return positive_prob * 100;
+    public Double point() {
+        return classificationScores.stream()
+                .filter(score -> score.name.equals(ClassificationName.POSITIVE))
+                .findFirst()
+                .map(score -> score.score * 100).orElse(0d);
     }
 }

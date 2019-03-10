@@ -7,9 +7,7 @@
 </head>
 <body>
     <h1>あなたの得点は</h1>
-    <p th:text="${filename}"></p>
-    <p>点です！</p>
-
+    <p th:text="${score.point()} + '点です!'"></p>
     <div class="twitter">
 		　<a href="//twitter.com/share" class="twitter-share-button"
 			data-text="アナゴさんのモノマネしました-"
