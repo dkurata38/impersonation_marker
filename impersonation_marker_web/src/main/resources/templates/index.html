@@ -8,9 +8,9 @@
 	<div class="row">
 		<h1>アナゴさん ものまね選手権</h1>
 		<img>
-		<form action="/send" method="post" enctype="multipart/form-data">
+		<form action="/send" th:action="@{/mark}" method="post" enctype="multipart/form-data" th:object="${impersonationForm}">
 			<input type="file" accept="audio/*" capture="microphone"
-				id="recorder">
+				id="recorder" name="upload_file">
 			<audio id="player" controls></audio>
 		</form>
 	</div>

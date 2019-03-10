@@ -1,7 +1,9 @@
 package com.github.we_team2.impersonation_marker.presentation.controllers;
 
 import com.github.we_team2.impersonation_marker.application.service.ImpersonationMarkingService;
+import com.github.we_team2.impersonation_marker.presentation.form.ImpersonationForm;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
@@ -14,7 +16,7 @@ public class ImpersonationMarkingController {
     }
 
     @PostMapping("mark")
-    public String mark() {
+    public String mark(ImpersonationForm impersonationForm, Model model) {
         return null;
     }
 }
