@@ -1,0 +1,18 @@
+version: '3.4'
+
+services: 
+  pyapp:
+    build: 
+      context: ./
+      dockerfile: Dockerfile
+    image: pyapp:20190309
+    hostname: pyapp
+    restart: always
+    tty: true
+    container_name: pyapp
+    command: bash
+    volumes: 
+      - './app:/app'
+      # - '/etc/localtime:/etc/localtime:ro'
+    environment: 
+      - TZ=Asia/Tokyo
