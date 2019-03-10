@@ -6,14 +6,17 @@
 </head>
 <body>
 	<div class="row">
-		<h1>アナゴさん ものまね選手権</h1>
-		<img>
-		<form action="/mark" th:action="@{/mark}" method="post" enctype="multipart/form-data" th:object="${impersonationForm}">
-			<input type="file" accept="audio/*" capture="microphone"
-				id="recorder" th:field="*{uploadedFile}">
-			<audio id="player" controls></audio>
-			<input type="submit" value="採点">
-		</form>
+		<div class="col-sm-8 offset-sm-3">
+			<h1>アナゴさん ものまね選手権</h1>
+			<p>アナゴさんのモノマネをしましょう</p>
+			<img th:src="@{'/img/anago.jpg'}" width="100" height="100" alt="アナゴさんイメージ">
+			<form action="/mark" th:action="@{/mark}" method="post" enctype="multipart/form-data" th:object="${impersonationForm}">
+				<input type="file" accept="audio/*" capture="microphone"
+					id="recorder" th:field="*{uploadedFile}">
+				<audio id="player" controls></audio>
+				<button type="submit" value="採点" class="btn btn-primary mb-2">採点</button>
+			</form>
+		</div>
 	</div>
 	<script>
 	  var recorder = document.getElementById('recorder');

@@ -264,3 +264,6 @@ venv.bak/
 # mypy
 .mypy_cache/
 
+
+uploadfile/*
+!uploadfile/gitkeep
