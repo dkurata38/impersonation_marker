@@ -77,5 +77,8 @@ if __name__ == '__main__':
 
     cm = confusion_matrix(y,prediction)
 
-    # new_cm = normalisation(cm)
-    # logger.debug('normalised cm = {}'.format(new_cm))
+    new_cm = normalisation(cm)
+    logger.debug('normalised cm = {}'.format(new_cm))
+
+    plot_confusion_matrix(new_cm, name_list, "name", "title")
+
