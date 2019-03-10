@@ -16,16 +16,20 @@ import os
 from logging import getLogger, basicConfig, DEBUG, WARNING
 
 logger = getLogger(__name__)
-BASE_DIR = '/app/data/'
+BASE_DIR = 'data/'
+
 basicConfig(
     level = DEBUG,
     format = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
 )
 
 def read_ceps(name_list,base_dir = BASE_DIR):
+    '''
+    mfcc で特徴量を算出したものを呼び出す
+    '''
     X,y = [],[]
     for label,name in enumerate(name_list):
-        for fn in glob.glob(os.path.join(base_dir, "*.ceps.npy")):
+        for fn in glob.glob(os.path.join(base_dir, name, "*.ceps.npy")):
             ceps = np.load(fn)
             num_ceps = len(ceps)
             X.append(np.mean(ceps[:],axis=0))
@@ -58,18 +62,20 @@ def plot_confusion_matrix(cm,name_list,name,title):
     pylab.show()
 
 if __name__ == '__main__':
-    name_list = ["info-girl1_info-girl1-omedetou1", "info-girl1_info-girl1-omedetougozaimasu1"]
+    # ディレクトリ名のリスト
+    name_list = ["anago", "notanago"]
 
     x,y = read_ceps(name_list)
     logger.debug('x = {}'.format(x))
     logger.debug('y = {}'.format(y))
     svc = LinearSVC(C=1.0)
     x,y = resample(x,y,n_samples=len(y))
-    svc.fit(x[1:],y[1:])
-    prediction = svc.predict(x[1:])
+    svc.fit(x,y)
+    prediction = svc.predict(x)
+    logger.debug('len(y) = {}'.format(len(y)) )
     logger.debug('prediction = {}'.format(prediction))
 
-    cm = confusion_matrix(y[1:],prediction)
+    cm = confusion_matrix(y,prediction)
 
-    new_cm = normalisation(cm)
-    logger.debug('normalised cm = {}'.format(new_cm))
+    # new_cm = normalisation(cm)
+    # logger.debug('normalised cm = {}'.format(new_cm))

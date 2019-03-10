@@ -9,7 +9,9 @@ import scipy
 from scipy import io
 from scipy.io import wavfile
 import numpy as np
+
 import os
+import glob
 
 from logging import getLogger, basicConfig, DEBUG, WARNING
 
@@ -26,11 +28,17 @@ def write_ceps(ceps,fn):
 
 def create_ceps(fn):
     # sample_rate,X = io.wavfile.read(fn)
-    rate, sig = io.wavfile.read(fn)
-    ceps = mfcc(sig, rate)
+    try:
+        rate, sig = io.wavfile.read(fn)
+        ceps = mfcc(sig, rate)
+        write_ceps(ceps, fn)
+    except ValueError as verr:
+        logger.warning('{} is {}.'.format(fn, verr))
 
-    write_ceps(ceps, fn)
 
 if __name__ == '__main__':
-    create_ceps('./data/info-girl1_info-girl1-omedetou1.wav')
-    create_ceps('./data/info-girl1_info-girl1-omedetougozaimasu1.wav')
+    base_dir = '/app/data/'
+    dir_name = ['anago', 'notanago']
+    for dn in dir_name:
+        for fn in glob.glob(os.path.join(base_dir, dn, "*.wav")):
+            create_ceps(fn)
