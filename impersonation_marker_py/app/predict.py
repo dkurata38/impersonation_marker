@@ -11,8 +11,8 @@ from sklearn.svm import LinearSVC
 from sklearn.utils import resample
 import glob
 import numpy as np
-import os
 
+import os
 from logging import getLogger, basicConfig, DEBUG, WARNING
 
 logger = getLogger(__name__)
@@ -37,6 +37,9 @@ def read_ceps(name_list,base_dir = BASE_DIR):
     return np.array(X),np.array(y)
 
 def normalisation(cm):
+    '''
+    正規化らしい
+    '''
     new_cm = []
     for line in cm:
         sum_val = sum(line)
@@ -45,6 +48,9 @@ def normalisation(cm):
     return new_cm
 
 def plot_confusion_matrix(cm,name_list,name,title):
+    '''
+    matplotlibでの描画らしい
+    '''
     pylab.clf()
     pylab.matshow(cm,fignum=False,cmap='Blues',vmin=0,vmax=1.0)
     ax = pylab.axes()
@@ -76,9 +82,11 @@ if __name__ == '__main__':
     logger.debug('prediction = {}'.format(prediction))
 
     cm = confusion_matrix(y,prediction)
+    logger.debug('cm = {}'.format(cm))
 
-    new_cm = normalisation(cm)
-    logger.debug('normalised cm = {}'.format(new_cm))
 
-    plot_confusion_matrix(new_cm, name_list, "name", "title")
+    # new_cm = normalisation(cm)
+    # logger.debug('normalised cm = {}'.format(new_cm))
+
+    # plot_confusion_matrix(new_cm, name_list, "name", "title")
 

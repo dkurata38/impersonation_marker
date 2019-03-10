@@ -12,7 +12,6 @@ import numpy as np
 
 import os
 import glob
-
 from logging import getLogger, basicConfig, DEBUG, WARNING
 
 logger = getLogger(__name__)
