@@ -4,7 +4,6 @@ import lombok.Value;
 
 import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.DecimalMin;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -13,8 +12,8 @@ import javax.validation.constraints.NotNull;
  */
 @Value
 public class ClassificationScore {
-    @NotBlank
-    public final String name;
+    @NotNull
+    public final ClassificationName name;
     @NotNull
     @DecimalMax(value = "1")
     @DecimalMin(value = "0")

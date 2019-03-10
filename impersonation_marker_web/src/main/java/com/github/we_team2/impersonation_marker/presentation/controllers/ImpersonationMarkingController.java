@@ -18,6 +18,7 @@ public class ImpersonationMarkingController {
 
     @PostMapping("mark")
     public String mark(@Valid ImpersonationForm impersonationForm, Model model) {
+        service.mark(impersonationForm.getUploadedFile());
 
         model.addAttribute("filename", impersonationForm.getUploadedFile().getOriginalFilename());
         return "score";

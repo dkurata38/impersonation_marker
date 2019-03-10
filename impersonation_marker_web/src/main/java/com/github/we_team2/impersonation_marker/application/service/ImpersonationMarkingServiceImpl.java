@@ -5,10 +5,21 @@ import com.github.we_team2.impersonation_marker.domain.ClassificationResult;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.time.Instant;
+import java.util.Optional;
+import java.util.ResourceBundle;
+
 @Service
 public class ImpersonationMarkingServiceImpl implements ImpersonationMarkingService {
 
     private ClassificationExecutor executor;
+
+    public ImpersonationMarkingServiceImpl(ClassificationExecutor executor) {
+        this.executor = executor;
+    }
 
     /**
      * 得点を計算するサービス.
@@ -16,15 +27,29 @@ public class ImpersonationMarkingServiceImpl implements ImpersonationMarkingServ
      * @return
      */
     @Override
-    public ClassificationResult mark(MultipartFile audio) {
+    public Optional<ClassificationResult> mark(MultipartFile audio) {
 
-        // Fileを保存するよ
+        // ファイル種類から決まる値をセットする
+        ResourceBundle bundle = ResourceBundle.getBundle("application");
+        String directoryPath = bundle.getString("audio.directory.path");
+        File uploadDir = new File(directoryPath);
 
-        // Pythonファイルを実行するよ
+        try {
+            // アップロードファイルを置く
+            String filePath = uploadDir.getPath() + File.separator + Instant.now().toString() + audio.getOriginalFilename();
+            File uploadFile =
+                    new File(filePath);
+            uploadFile.createNewFile();
+            FileOutputStream fos = new FileOutputStream(uploadFile);
+            fos.write(audio.getBytes());
+            fos.close();
 
-        // 正解データにバインドするよ
+            Optional<ClassificationResult> classificationResult = executor.classify(filePath);
+            return classificationResult;
 
-
-        return null;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return Optional.empty();
+        }
     }
 }

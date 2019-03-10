@@ -1,8 +1,8 @@
 package com.github.we_team2.impersonation_marker.domain;
 
-import java.util.List;
-
 import lombok.RequiredArgsConstructor;
+
+import java.util.List;
 
 /**
  * 分類した結果を表す.
