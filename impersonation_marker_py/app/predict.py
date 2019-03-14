@@ -4,8 +4,8 @@
 '''
 特徴量を利用して予測
 '''
-from matplotlib.pyplot import specgram
-from matplotlib import pylab
+# from matplotlib.pyplot import specgram
+# from matplotlib import pylab
 from sklearn.metrics import confusion_matrix
 from sklearn.svm import LinearSVC
 from sklearn.utils import resample
@@ -18,12 +18,13 @@ from logging import getLogger, basicConfig, DEBUG, WARNING
 logger = getLogger(__name__)
 
 # ceps の保存場所
-BASE_DIR = '/app/data/'
+BASE_DIR = 'data/'
 
 basicConfig(
     level = DEBUG,
     format = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
 )
+
 
 def read_ceps(name_list,base_dir = BASE_DIR):
     '''
@@ -38,6 +39,7 @@ def read_ceps(name_list,base_dir = BASE_DIR):
             y.append(label)
     return np.array(X),np.array(y)
 
+
 def normalisation(cm):
     '''
     正規化らしい
@@ -49,25 +51,26 @@ def normalisation(cm):
         new_cm.append(new_array)
     return new_cm
 
-def plot_confusion_matrix(cm,name_list,name,title):
-    '''
-    matplotlibでの描画らしい
-    '''
-    pylab.clf()
-    pylab.matshow(cm,fignum=False,cmap='Blues',vmin=0,vmax=1.0)
-    ax = pylab.axes()
-    ax.set_xticks(range(len(name_list)))
-    ax.set_xticklabels(name_list)
-    ax.xaxis.set_ticks_position("bottom")
-    ax.set_yticks(range(len(name_list)))
-    ax.set_yticklabels(name_list)
-    pylab.title(title)
-    pylab.colorbar()
-    pylab.grid(False)
-    pylab.xlabel('Predict class')
-    pylab.ylabel('True class')
-    pylab.grid(False)
-    pylab.show()
+# def plot_confusion_matrix(cm,name_list,name,title):
+#     '''
+#     matplotlibでの描画らしい
+#     '''
+#     pylab.clf()
+#     pylab.matshow(cm,fignum=False,cmap='Blues',vmin=0,vmax=1.0)
+#     ax = pylab.axes()
+#     ax.set_xticks(range(len(name_list)))
+#     ax.set_xticklabels(name_list)
+#     ax.xaxis.set_ticks_position("bottom")
+#     ax.set_yticks(range(len(name_list)))
+#     ax.set_yticklabels(name_list)
+#     pylab.title(title)
+#     pylab.colorbar()
+#     pylab.grid(False)
+#     pylab.xlabel('Predict class')
+#     pylab.ylabel('True class')
+#     pylab.grid(False)
+#     pylab.show()
+
 
 if __name__ == '__main__':
     # ディレクトリ名のリスト
@@ -77,7 +80,7 @@ if __name__ == '__main__':
     logger.debug('x = {}'.format(x))
     logger.debug('y = {}'.format(y))
     svc = LinearSVC(C=1.0)
-    x,y = resample(x,y,n_samples=len(y))
+    x,y = resample(x, y, n_samples=len(y))
     svc.fit(x,y)
     prediction = svc.predict(x)
     logger.debug('len(y) = {}'.format(len(y)) )

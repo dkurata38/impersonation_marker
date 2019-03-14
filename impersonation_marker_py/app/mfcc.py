@@ -28,8 +28,8 @@ def write_ceps(ceps,fn):
 def create_ceps(fn):
     # sample_rate,X = io.wavfile.read(fn)
     try:
-        rate, sig = io.wavfile.read(fn)
-        ceps = mfcc(sig, rate)
+        data = io.wavfile.read(fn)
+        ceps = mfcc(data)
         write_ceps(ceps, fn)
     except ValueError as verr:
         logger.warning('{} is {}.'.format(fn, verr))
