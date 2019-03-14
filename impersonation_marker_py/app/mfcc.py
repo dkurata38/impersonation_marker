@@ -20,6 +20,12 @@ basicConfig(
     format = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
 )
 
+'''
+MFCCにより取得した特徴量をファイルに保存するメソッド.
+特徴量のデータを元の音声ファイル名の拡張子を"ceps"に置換したファイルに保存する.
+@param ceps 特徴量のデータ
+@param fn 元の音声ファイル名
+'''
 def write_ceps(ceps,fn):
     base_fn,ext = os.path.splitext(fn)
     data_fn = base_fn + ".ceps"
