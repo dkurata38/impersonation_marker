@@ -6,16 +6,25 @@
 </head>
 <body>
 	<div class="row">
-		<div class="col-sm-8 offset-sm-3">
-			<h1>アナゴさん ものまね選手権</h1>
-			<p>アナゴさんのモノマネをしましょう</p>
-			<img th:src="@{'/img/anago.jpg'}" width="100" height="100" alt="アナゴさんイメージ">
-			<form action="/mark" th:action="@{/mark}" method="post" enctype="multipart/form-data" th:object="${impersonationForm}">
-				<input type="file" accept="audio/*" capture="microphone"
-					id="recorder" th:field="*{uploadedFile}">
-				<audio id="player" controls></audio>
-				<button type="submit" value="採点" class="btn btn-primary mb-2">採点</button>
-			</form>
+		<div class="col-sm-8 offset-sm-2">
+			<div class="row">
+				<div class="col-sm-12">
+					<h1>アナゴさん ものまね選手権</h1>
+					<p>アナゴさんのモノマネをしましょう</p>
+				</div>
+				<img th:src="@{'/img/anago.jpg'}" width="100" height="100" alt="アナゴさんイメージ">
+			</div>
+			<div class="row mt-4">
+				<form action="/mark" th:action="@{/mark}" method="post" enctype="multipart/form-data" th:object="${impersonationForm}">
+					<div class="custom-file">
+						<label class="custom-file-label" for="recorder">音声ファイル</label>
+						<input type="file" accept="audio/*" capture="microphone"
+							   id="recorder" th:field="*{uploadedFile}" class="invisible">
+					</div>
+					<audio id="player" controls class="ui-helper-hidden"></audio>
+					<button type="submit" value="採点" class="btn btn-primary mb-2">採点</button>
+				</form>
+			</div>
 		</div>
 	</div>
 	<script>
@@ -24,6 +33,7 @@
 
 	  recorder.addEventListener('change', function(e) {
 	    var file = e.target.files[0];
+	    player.className = "visible";
 	    // Do something with the audio file.
 	    player.src =  URL.createObjectURL(file);
 	  });
